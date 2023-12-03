@@ -3,9 +3,10 @@ CXX := g++
 NVCC := nvcc
 
 # Compiler flags
-CXXFLAGS := -c -g $(shell pkg-config --cflags --libs opencv4)
-NVCCFLAGS := -c -g -arch=compute_89 -code=sm_89 -allow-unsupported-compiler
-LDFLAGS := -L/usr/local/cuda/lib64/ -lcudart -lcuda $(shell pkg-config --cflags --libs opencv4)
+CXXFLAGS := -c -g -fPIE $(shell pkg-config --cflags --libs opencv4)
+NVCCFLAGS := -c -g -arch=compute_89 -code=sm_89 -allow-unsupported-compiler -Xcompiler -fPIE
+
+LDFLAGS := -L/usr/local/cuda/lib64/ -lcudart -lcuda -no-pie $(shell pkg-config --cflags --libs opencv4)
 
 # Source files
 CXX_SRC := main.cpp
